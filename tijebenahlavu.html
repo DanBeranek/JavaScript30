@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  </head>
+  <body>
+    <script>
+      // function camelize(string) {
+      //   let arr = string.split("-")
+      //   arr.slice(1).forEach((word, index) => {
+      //     arr[index+1] = `${word[0].toUpperCase()}${word.slice(1)}`;
+      //   });
+      //   return arr.join()
+      // }
+
+      function camelize(str) {
+        return str
+          .split("-")
+          .map(
+            (word, index) => index === 0 ? word : word[0].toUpperCase() + word.slice(1)
+          )
+          .join('');
+      }
+
+      console.log(camelize("background-color"));
+      console.log(camelize("list-style-image"));
+      console.log(camelize("-webkit-transition"));
+
+
+      function filterRange(arr, a, b) {
+        return arr.filter(number => (number >= a && number <= b))
+      }
+
+      let arr = [5, 3, 8, 1];
+      let filtered = filterRange(arr, 1, 4);
+
+      console.log(arr);
+      console.log(filtered);
+
+      function filterRangeInPlace(arr, a, b) {
+        for (let i = 0; i < arr.length; i++) {
+          let val = arr[i];
+          if (val < a || val > b) {
+            arr.splice(i, 1);
+            i--;
+          }
+        }
+      }
+      filterRangeInPlace(arr, 1, 4);
+      console.log(arr);
+
+      arr = [5, 2, 1, -10, 8];
+
+      arr.sort((a, b) => b - a);
+
+      console.log(arr);
+
+      //
+
+      function copySorted(arr) {
+        return arr.slice().sort();
+      }
+
+      arr = ["HTML", "JavaScript", "CSS"];
+
+      console.log(arr);
+      console.log(copySorted(arr));
+
+
+      function Calculator() {
+
+        this.methods = {
+          "-": (a, b) => a - b,
+          "+": (a, b) => a + b
+        };
+
+        this.calculate = function (str) {
+          let split = str.split(" "),
+            a = +split[0],
+            operator = split[1],
+            b = +split[2];
+
+          if (!this.methods[operator] || isNaN(a) || isNaN(b)) {
+            return NaN;
+          }
+
+          return this.methods[operator](a, b);
+        };
+
+        this.addMethod = function(name, func) {
+          this.methods[name] = func;
+        };
+      }
+
+      let calc = new Calculator;
+
+      calc.addMethod('*', (a, b) => a * b);
+
+      console.log(calc.calculate("3 + 7"));
+      console.log(calc.calculate("3 * 7"));
+
+
+      let john = { name: "John", surname: "Smith", age: 25, id: 1 };
+      let pete = { name: "Pete", surname: "Hunt", age: 30, id: 2 };
+      let mary = { name: "Mary", surname: "Key", age: 28, id: 3 };
+
+      let users = [ john, pete, mary ];
+
+      let names = users.map(user => user.name);
+
+      console.log(names);
+
+      let usersMapped = users.map(user => ({fullName: `${user.name} ${user.surname}`, id: user.id}));
+
+      console.log(usersMapped[0].fullName);
+
+      function sortByAge(users) {
+        users.sort((a, b) => a.age - b.age);
+      }
+
+      sortByAge(users);
+
+      console.log(users);
+
+      arr = [1, 2, 3];
+
+      function shuffle(arr) {
+        arr.sort(() => Math.random() - 0.5);
+      }
+
+      shuffle(arr);
+      console.log(arr);
+
+
+      function getAverageAge(users) {
+        return users.reduce((sumAge, user) => sumAge + user.age, 0) / users.length;
+      }
+
+      console.log(getAverageAge(users));
+
+
+      let strings = ["Hare", "Krishna", "Hare", "Krishna",
+        "Krishna", "Krishna", "Hare", "Hare", ":-O"
+      ];
+
+      function unique(arr) {
+        let result = [];
+
+        for (let item of arr) {
+          console.log(item)
+          if (!result.includes(item)) {
+            result.push(item);
+          }
+        }
+
+        return result;
+      }
+      console.log(unique(strings));
+
+      users = [
+        {id: 'john', name: "John Smith", age: 20},
+        {id: 'ann', name: "Ann Smith", age: 24},
+        {id: 'pete', name: "Pete Peterson", age: 31},
+      ];
+
+      function groupById(users) {
+        return users.reduce((obj, user) => {
+          obj[user.id] = user;
+          return obj;
+        }, {})
+      }
+
+      let usersById = groupById(users);
+
+      console.log(usersById)
+
+    </script>
+  </body>
+</html>
